@@ -8,5 +8,10 @@ be added to your point total.
 This game was made by [Brent P. Newhall](http://brentnewhall.com) as part of
 [Brent's Game a Week Challenge](https://s3.amazonaws.com/brents-portfolio/index.html)
 
+## Resources
+
+Images from the [Space Shooter Redux](https://opengameart.org/content/space-shooter-redux)
+tile set.
+
 This project was bootstrapped with
 [Create React App](https://github.com/facebook/create-react-app).
