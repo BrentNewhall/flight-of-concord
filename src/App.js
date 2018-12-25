@@ -3,23 +3,22 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  constructor( props ) {
+    super( props );
+    this.state = {
+      x: 100,
+      y: 100
+    }
+  }
   render() {
+    let ships = '';
+    let playerShipStyle = {
+      left: this.state.x,
+      top: this.state.y
+    }
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <img src='/images/playerShip1_blue.png' style={playerShipStyle} className='playerShip' alt='Player' />
       </div>
     );
   }
