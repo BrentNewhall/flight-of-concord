@@ -10,7 +10,7 @@ This game was made by [Brent P. Newhall](http://brentnewhall.com) as part of
 
 ## Work log:
 
-|---|---|
+| --- | --- |
 | 2018-12-25 | 45 minutes |
 
 ## Resources
