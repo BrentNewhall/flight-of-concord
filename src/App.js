@@ -15,11 +15,19 @@ class App extends Component {
       { speed: 0 },
       { speed: 0.4 }
     ];
-    this.ships = [
-      { id: 0, x: Math.random() * 270, y: Math.random() * 200, type: 1, color: Math.floor(Math.random() * 3), collided: false },
-      { id: 1, x: Math.random() * 270, y: Math.random() * 200, type: 1, color: Math.floor(Math.random() * 3), collided: false },
-      { id: 2, x: Math.random() * 270, y: Math.random() * 200, type: 1, color: Math.floor(Math.random() * 3), collided: false }
-    ];
+    this.ships = [];
+    for( let i = 0; i < 10; i++ ) {
+      this.ships.push(
+        {
+          id: i,
+          x: Math.random() * 270,
+          y: Math.random() * 250,
+          type: 1,
+          color: Math.floor(Math.random() * 3),
+          collided: false
+        }
+      )
+    }
     this.lasers = [];
     this.shipCollision = this.shipCollision.bind(this);
     this.gameLoop = this.gameLoop.bind(this);
@@ -117,8 +125,9 @@ class App extends Component {
         left: ship.x,
         top: ship.y
       }
+      let shipType = (ship.collided ? 'blank' : this.shipColors[ship.color] );
       return <img src={'/images/flower' + ship.type + 
-          this.shipColors[ship.color] + '.png'} alt='Enemy' style={enemyShipStyle}
+          shipType + '.png'} alt='Enemy' style={enemyShipStyle}
           className='ship' key={'enemy'+ship.id} />
     });
     // Create laser images
