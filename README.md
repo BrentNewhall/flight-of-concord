@@ -16,8 +16,11 @@ This game was made by [Brent P. Newhall](http://brentnewhall.com) as part of
 
 ## Resources
 
-Images from the [Space Shooter Redux](https://opengameart.org/content/space-shooter-redux)
+Graphics are from the [Space Shooter Redux](https://opengameart.org/content/space-shooter-redux)
 tile set.
+
+The background image is a public domain space image from
+[NASA](https://www.nasa.gov).
 
 This project was bootstrapped with
 [Create React App](https://github.com/facebook/create-react-app).
