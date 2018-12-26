@@ -4,6 +4,10 @@
   height: 32px;
 }
 
+.laser {
+  position: absolute;
+}
+
 body {
   background-color: black;
 }
