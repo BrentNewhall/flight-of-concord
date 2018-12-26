@@ -28,7 +28,7 @@ class App extends Component {
         }
       )
     }
-    this.lasers = [];
+    this.bubbles = [];
     this.shipCollision = this.shipCollision.bind(this);
     this.gameLoop = this.gameLoop.bind(this);
     this.keyDown = this.keyDown.bind(this);
@@ -63,25 +63,25 @@ class App extends Component {
         this.shipCollision( ship.color );
         ship.collided = true;
       }
-      if( ship.y > 380 ) { // Wrap ship to top of screen
+      if( ship.y > 370 ) { // Wrap ship to top of screen
         ship.x = Math.random() * 270;
         ship.y = 0;
         ship.color = Math.floor(Math.random() * 3);
         ship.collided = false;
       }
     })
-    // Move lasers and update ships hit
-    this.lasers.forEach( (laser, index) => {
-      laser.y -= 5;
+    // Move bubbles and update ships hit
+    this.bubbles.forEach( (bubble, index) => {
+      bubble.y -= 5;
       this.ships.forEach( (ship) => {
-        if( ship.x <= laser.x  &&  ship.x + 32 >= laser.x + 4  &&
-            ship.y + 32 >= laser.y - 3  &&  ship.y + 32 <= laser.y + 3 ) {
+        if( ship.x <= bubble.x + 16  &&  ship.x + 32 >= bubble.x  &&
+            ship.y + 32 >= bubble.y - 3  &&  ship.y + 32 <= bubble.y + 3 ) {
           ship.color++; // Change ship color
           if( ship.color > 2 )  ship.color = 0;
         }
       });
-      if( laser.y <= 0 ) { // Remove
-        this.lasers.splice( index, 1 );
+      if( bubble.y <= 0 ) { // Remove
+        this.bubbles.splice( index, 1 );
       }
     })
     if( this.state.shipMovement < 0  &&  this.state.x > 0 ) {
@@ -102,8 +102,8 @@ class App extends Component {
     else if( e.key === 'ArrowRight' ) { // Move right
       this.setState( { shipMovement: 2 } );
     }
-    else if( e.key === ' ' ) { // Fire laser
-      this.lasers.push( { x: this.state.x + 16, y: this.state.y + 10 } );
+    else if( e.key === ' ' ) { // Fire bubble
+      this.bubbles.push( { x: this.state.x + 16, y: this.state.y + 10 } );
     }
   }
 
@@ -130,14 +130,14 @@ class App extends Component {
           shipType + '.png'} alt='Enemy' style={enemyShipStyle}
           className='ship' key={'enemy'+ship.id} />
     });
-    // Create laser images
-    let laserObjects = this.lasers.map( (laser, index) => {
-      const laserStyle = {
-        left: laser.x,
-        top: laser.y
+    // Create bubble images
+    let bubbleObjects = this.bubbles.map( (bubble, index) => {
+      const bubbleStyle = {
+        left: bubble.x,
+        top: bubble.y
       }
-      return <img src='/images/laserRed01.png' alt='Laser' style={laserStyle}
-          className='laser' key={'laser' + index} />
+      return <img src='/images/bubble.png' alt='Bubble' style={bubbleStyle}
+          className='bubble' key={'bubble' + index} />
     })
     // Create ship
     let playerShipStyle = {
@@ -148,8 +148,8 @@ class App extends Component {
     return (
       <div>
         <div className="App" onKeyDown={this.keyDown} onKeyUp={this.keyUp}>
-          {laserObjects}
-          <img src='/images/playerShip1_blue.png' style={playerShipStyle}
+          {bubbleObjects}
+          <img src='/images/player.png' style={playerShipStyle}
               className='ship' alt='Player' />
           {shipObjects}
         </div>

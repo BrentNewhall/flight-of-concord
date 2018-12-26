@@ -12,7 +12,7 @@
   height: 32px;
 }
 
-.laser {
+.bubble {
   position: absolute;
   z-index: 100;
 }

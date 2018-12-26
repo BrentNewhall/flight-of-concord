@@ -13,14 +13,13 @@ This game was made by [Brent P. Newhall](http://brentnewhall.com) as part of
 | Date | Time spent |
 | ---- | ---------- |
 | 2018-12-25 | 1:45 |
+| 2018-12-26 | 1:15 |
 
 ## Resources
 
-Graphics are from the [Space Shooter Redux](https://opengameart.org/content/space-shooter-redux)
-tile set.
-
-The background image is a public domain space image from
-[NASA](https://www.nasa.gov).
+Graphics are from the [Pixel Flower Icons](https://opengameart.org/content/pixel-flower-icons)
+tile set and [Superpowers Assets](https://opengameart.org/content/superpowers-assets-various-2d)
+tile set on [OpenGameArt.org](https://opengameart.org).
 
 This project was bootstrapped with
 [Create React App](https://github.com/facebook/create-react-app).
