@@ -6,10 +6,13 @@
 
 .laser {
   position: absolute;
+  z-index: 100;
 }
 
 body {
-  background-color: black;
+  /* background-color: black; */
+  background: url('/images/starfield.jpg');
+  background-size: cover;
 }
 
 @keyframes App-logo-spin {
