@@ -7,19 +7,21 @@ class App extends Component {
     this.state = {
       x: 100,
       y: 360,
-      shipMovement: 0
+      shipMovement: 0,
+      points: 0
     };
-    this.shipColors = [ 'Red', 'Blue', 'Green' ];
+    this.shipColors = [ 'red', 'blue', 'yellow' ];
     this.shipTypes = [
       { speed: 0 },
       { speed: 0.4 }
     ];
     this.ships = [
-      { id: 0, x: 50, y: 50, type: 1, color: 0 },
-      { id: 1, x: 100, y: 50, type: 1, color: 0 },
-      { id: 2, x: 150, y: 50, type: 1, color: 0 }
+      { id: 0, x: Math.random() * 270, y: Math.random() * 200, type: 1, color: Math.floor(Math.random() * 3), collided: false },
+      { id: 1, x: Math.random() * 270, y: Math.random() * 200, type: 1, color: Math.floor(Math.random() * 3), collided: false },
+      { id: 2, x: Math.random() * 270, y: Math.random() * 200, type: 1, color: Math.floor(Math.random() * 3), collided: false }
     ];
     this.lasers = [];
+    this.shipCollision = this.shipCollision.bind(this);
     this.gameLoop = this.gameLoop.bind(this);
     this.keyDown = this.keyDown.bind(this);
     this.Up = this.keyUp.bind(this);
@@ -31,12 +33,33 @@ class App extends Component {
     document.addEventListener("keyup", this.keyUp.bind(this));
   }
 
-  // Update ship positions
+  shipCollision( targetColor ) {
+    //alert( "Collision!" );
+    this.ships.forEach( (ship) => {
+      if( ship.color === targetColor ) {
+        this.setState( { points: this.state.points + 10 } );
+      }
+    });
+  }
+
   gameLoop() {
+    // Update ship positions
     this.ships.forEach( (ship) => {
       ship.y += this.shipTypes[ship.type].speed;
-      if( ship.y > 500 ) { // Wrap to top of screen
+      // If ship has collided with player, process the collision.
+      if( ship.x <= this.state.x + 32  &&
+          ship.x + 32 >= this.state.x  &&
+          ship.y <= this.state.y + 32  &&
+          ship.y + 32 >= this.state.y  &&
+          ! ship.collided ) {
+        this.shipCollision( ship.color );
+        ship.collided = true;
+      }
+      if( ship.y > 380 ) { // Wrap to top of screen
+        ship.x = Math.random() * 270;
         ship.y = 0;
+        ship.color = Math.floor(Math.random() * 3);
+        ship.collided = false;
       }
     })
     // Move lasers and update ships hit
@@ -72,7 +95,7 @@ class App extends Component {
       this.setState( { shipMovement: 2 } );
     }
     else if( e.key === ' ' ) { // Fire laser
-      this.lasers.push( { x: this.state.x + 16, y: this.state.y - 32 } );
+      this.lasers.push( { x: this.state.x + 16, y: this.state.y + 10 } );
     }
   }
 
@@ -94,8 +117,8 @@ class App extends Component {
         left: ship.x,
         top: ship.y
       }
-      return <img src={'/images/enemy' + this.shipColors[ship.color] +
-          ship.type + '.png'} alt='Enemy' style={enemyShipStyle}
+      return <img src={'/images/flower' + ship.type + 
+          this.shipColors[ship.color] + '.png'} alt='Enemy' style={enemyShipStyle}
           className='ship' key={'enemy'+ship.id} />
     });
     // Create laser images
@@ -114,11 +137,14 @@ class App extends Component {
     }
     // Render page
     return (
-      <div className="App" onKeyDown={this.keyDown} onKeyUp={this.keyUp}>
-        {laserObjects}
-        <img src='/images/playerShip1_blue.png' style={playerShipStyle}
-            className='ship' alt='Player' />
-        {shipObjects}
+      <div>
+        <div className="App" onKeyDown={this.keyDown} onKeyUp={this.keyUp}>
+          {laserObjects}
+          <img src='/images/playerShip1_blue.png' style={playerShipStyle}
+              className='ship' alt='Player' />
+          {shipObjects}
+        </div>
+        <div className="scoreboard">{this.state.points}</div>
       </div>
     );
   }
