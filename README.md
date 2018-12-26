@@ -12,7 +12,7 @@ This game was made by [Brent P. Newhall](http://brentnewhall.com) as part of
 
 | Date | Time spent |
 | ---- | ---------- |
-| 2018-12-25 | 45 minutes |
+| 2018-12-25 | 1:45 |
 
 ## Resources
 
