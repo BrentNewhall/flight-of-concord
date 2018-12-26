@@ -63,7 +63,7 @@ class App extends Component {
         this.shipCollision( ship.color );
         ship.collided = true;
       }
-      if( ship.y > 380 ) { // Wrap to top of screen
+      if( ship.y > 380 ) { // Wrap ship to top of screen
         ship.x = Math.random() * 270;
         ship.y = 0;
         ship.color = Math.floor(Math.random() * 3);
