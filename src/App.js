@@ -6,13 +6,13 @@ class App extends Component {
     super( props );
     this.state = {
       x: 100,
-      y: 300,
+      y: 360,
       shipMovement: 0
     };
     this.shipColors = [ 'Red', 'Blue', 'Green' ];
     this.shipTypes = [
       { speed: 0 },
-      { speed: 0.2 }
+      { speed: 0.4 }
     ];
     this.ships = [
       { id: 0, x: 50, y: 50, type: 1, color: 0 },
@@ -44,7 +44,7 @@ class App extends Component {
       laser.y -= 5;
       this.ships.forEach( (ship) => {
         if( ship.x <= laser.x  &&  ship.x + 32 >= laser.x + 4  &&
-            ship.y + 32 >= laser.y - 2  &&  ship.y + 32 <= laser.y + 2 ) {
+            ship.y + 32 >= laser.y - 3  &&  ship.y + 32 <= laser.y + 3 ) {
           ship.color++; // Change ship color
           if( ship.color > 2 )  ship.color = 0;
         }
@@ -56,12 +56,13 @@ class App extends Component {
     if( this.state.shipMovement < 0  &&  this.state.x > 0 ) {
       this.setState( { x: this.state.x + this.state.shipMovement } )
     }
-    else if( this.state.shipMovement > 0  &&  this.state.x < 600 ) {
+    else if( this.state.shipMovement > 0  &&  this.state.x < 270 ) {
       this.setState( { x: this.state.x + this.state.shipMovement } )
     }
     this.forceUpdate();
   }
 
+  // Process key press
   keyDown = e => {
     //console.log( "Key down: " + e.key );
     if( e.key === 'ArrowLeft' ) { // Move left
@@ -75,6 +76,7 @@ class App extends Component {
     }
   }
 
+  // Key has been depressed; disable appropriate behavior
   keyUp = e => {
     //console.log( "Key up: " + e.key );
     if( e.key === 'ArrowLeft' ) {
@@ -86,6 +88,7 @@ class App extends Component {
   }
 
   render() {
+    // Create ship images
     let shipObjects = this.ships.map( (ship) => {
       const enemyShipStyle = {
         left: ship.x,
@@ -95,6 +98,7 @@ class App extends Component {
           ship.type + '.png'} alt='Enemy' style={enemyShipStyle}
           className='ship' key={'enemy'+ship.id} />
     });
+    // Create laser images
     let laserObjects = this.lasers.map( (laser, index) => {
       const laserStyle = {
         left: laser.x,
@@ -103,10 +107,12 @@ class App extends Component {
       return <img src='/images/laserRed01.png' alt='Laser' style={laserStyle}
           className='laser' key={'laser' + index} />
     })
+    // Create ship
     let playerShipStyle = {
       left: this.state.x,
       top: this.state.y
     }
+    // Render page
     return (
       <div className="App" onKeyDown={this.keyDown} onKeyUp={this.keyUp}>
         {laserObjects}
