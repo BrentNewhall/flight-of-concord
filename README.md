@@ -8,6 +8,11 @@ same color on screen.
 This game was made by [Brent P. Newhall](http://brentnewhall.com) as part of
 [Brent's Game a Week Challenge](https://s3.amazonaws.com/brents-portfolio/index.html)
 
+## Instructions
+
+Use the left and right arrow keys to move your avatar, and the space key to
+fire a bubble.
+
 ## Work log:
 
 | Date | Time spent |
