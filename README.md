@@ -1,9 +1,9 @@
 # Flight of Concord
 
-This is a React arcade game where you must change the color of enemies to allow
-yourself to fly through them. If your ship matches the enemy's color, you can
-fly past it, and whenever you do, the number of ships of that same color will
-be added to your point total.
+This is a React arcade game where you collect points based on color. The
+player's avatar fires bubbles at incoming flowers to change their colors. When
+the avatar touches a flower, the player gets points for every flower of the
+same color on screen.
 
 This game was made by [Brent P. Newhall](http://brentnewhall.com) as part of
 [Brent's Game a Week Challenge](https://s3.amazonaws.com/brents-portfolio/index.html)
