@@ -29,6 +29,7 @@ class App extends Component {
       )
     }
     this.bubbles = [];
+    this.flashes = [];
     this.shipCollision = this.shipCollision.bind(this);
     this.gameLoop = this.gameLoop.bind(this);
     this.keyDown = this.keyDown.bind(this);
@@ -46,6 +47,13 @@ class App extends Component {
     this.ships.forEach( (ship) => {
       if( ship.color === targetColor ) {
         this.setState( { points: this.state.points + 10 } );
+        this.flashes.push({
+          x: ship.x,
+          y: ship.y,
+          speed: this.shipTypes[ship.type].speed,
+          countdown: 20
+        })
+        console.log( "New flash's y is " + ship.y + " and speed is " + this.shipTypes[ship.type].speed );
       }
     });
   }
@@ -80,10 +88,18 @@ class App extends Component {
           if( ship.color > 2 )  ship.color = 0;
         }
       });
-      if( bubble.y <= 0 ) { // Remove
+      if( bubble.y <= 0 ) { // If bubble at top of play area, remove it
         this.bubbles.splice( index, 1 );
       }
-    })
+    });
+    // Update flashes
+    this.flashes.forEach( (flash, index) => {
+      flash.countdown -= 1;
+      flash.y += flash.speed;
+      if( flash.countdown <= 0 ) { // If countdown complete, remove flash
+        this.flashes.splice( index, 1 );
+      }
+    });
     if( this.state.shipMovement < 0  &&  this.state.x > 0 ) {
       this.setState( { x: this.state.x + this.state.shipMovement } )
     }
@@ -139,7 +155,17 @@ class App extends Component {
       return <img src='/images/bubble.png' alt='Bubble' style={bubbleStyle}
           className='bubble' key={'bubble' + index} />
     })
-    // Create ship
+    // Create flashes
+    let flashObjects = this.flashes.map( (flash, index) => {
+      const flashStyle = {
+        left: flash.x,
+        top: flash.y,
+        opacity: flash.countdown / 20
+      }
+      return <img src='/images/flash.png' alt='Flash' style={flashStyle}
+          className='flash' key={'flash' + index} />
+    });
+    // Create player ship
     let playerShipStyle = {
       left: this.state.x,
       top: this.state.y
@@ -149,6 +175,7 @@ class App extends Component {
       <div>
         <div className="App" onKeyDown={this.keyDown} onKeyUp={this.keyUp}>
           {bubbleObjects}
+          {flashObjects}
           <img src='/images/player.png' style={playerShipStyle}
               className='ship' alt='Player' />
           {shipObjects}
