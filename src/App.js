@@ -1,6 +1,28 @@
 import React, { Component } from 'react';
 import './App.css';
 
+class StatusBar extends Component {
+  constructor( props ) {
+    super( props );
+    this.timeElapsed = 0;
+    this.updateClock = this.updateClock.bind(this);
+    setInterval( this.updateClock, 1000 );
+  }
+
+  updateClock() {
+    this.timeElapsed += 1;
+  }
+
+  render() {
+    return (
+      <div className="scoreboard">
+        <div className="points">{this.props.points}</div>
+        <div className="clock">{this.timeElapsed}</div>
+      </div>
+    );
+  }
+}
+
 class App extends Component {
   constructor( props ) {
     super( props );
@@ -53,7 +75,6 @@ class App extends Component {
           speed: this.shipTypes[ship.type].speed,
           countdown: 20
         })
-        console.log( "New flash's y is " + ship.y + " and speed is " + this.shipTypes[ship.type].speed );
       }
     });
   }
@@ -180,7 +201,7 @@ class App extends Component {
               className='ship' alt='Player' />
           {shipObjects}
         </div>
-        <div className="scoreboard">{this.state.points}</div>
+        <StatusBar points={this.state.points} />
       </div>
     );
   }
