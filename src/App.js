@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import bgMusic from './audio/InfinitePerspective.mp3';
+
 /* StatusBar -- Displays points, timer, and score. */
 
 class StatusBar extends Component {
@@ -91,11 +93,18 @@ class App extends Component {
     document.addEventListener("keyup", this.keyUp.bind(this));
   }
 
+  componentDidMount() {
+    document.getElementById('bgMusic').volume = 0.4;
+    document.getElementById('bgMusic').play();
+  }
+
   flowerCollision( targetColor ) {
-    //alert( "Collision!" );
+    // Play beep and cycle to next beep sound (so we can play multiple beeps
+    // over top of each other)
     this.beeps[this.beep].play();
     this.beep += 1;
     if( this.beep >= this.beeps.length )  this.beep = 0;
+    // Look for flowers of the same color
     this.flowers.forEach( (flower) => {
       if( flower.color === targetColor ) {
         this.setState( { points: this.state.points + 10 } );
@@ -237,6 +246,7 @@ class App extends Component {
           Use the left and right arrow keys to move your avatar, and the space
           key to fire a bubble.
         </div>
+        <audio id='bgMusic' src={bgMusic} loop />
       </div>
     );
   }

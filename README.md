@@ -29,5 +29,9 @@ tile set on [OpenGameArt.org](https://opengameart.org).
 
 The flower collection sound is a beep from the anime series _Gundam Wing_.
 
+The background music is "Infinite Perspective" by
+[Kevin MacLeod](incompetech.com), licensed under a
+[Creative Commons: By Attribution 3.0 License](http://creativecommons.org/licenses/by/3.0/)
+
 This project was bootstrapped with
 [Create React App](https://github.com/facebook/create-react-app).
