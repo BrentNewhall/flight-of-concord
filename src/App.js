@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
+/* StatusBar -- Displays points, timer, and score. */
+
 class StatusBar extends Component {
   constructor( props ) {
     super( props );
@@ -41,23 +43,24 @@ class StatusBar extends Component {
   }
 }
 
+
 class App extends Component {
   constructor( props ) {
     super( props );
     this.state = {
       x: 100,
       y: 360,
-      shipMovement: 0,
+      flowerMovement: 0,
       points: 0
     };
-    this.shipColors = [ 'red', 'blue', 'yellow' ];
-    this.shipTypes = [
+    this.flowerColors = [ 'red', 'blue', 'yellow' ];
+    this.flowerTypes = [
       { speed: 0 },
       { speed: 0.4 }
     ];
-    this.ships = [];
+    this.flowers = [];
     for( let i = 0; i < 10; i++ ) {
-      this.ships.push(
+      this.flowers.push(
         {
           id: i,
           x: Math.random() * 270,
@@ -70,7 +73,7 @@ class App extends Component {
     }
     this.bubbles = [];
     this.flashes = [];
-    this.shipCollision = this.shipCollision.bind(this);
+    this.flowerCollision = this.flowerCollision.bind(this);
     this.gameLoop = this.gameLoop.bind(this);
     this.keyDown = this.keyDown.bind(this);
     this.Up = this.keyUp.bind(this);
@@ -82,15 +85,15 @@ class App extends Component {
     document.addEventListener("keyup", this.keyUp.bind(this));
   }
 
-  shipCollision( targetColor ) {
+  flowerCollision( targetColor ) {
     //alert( "Collision!" );
-    this.ships.forEach( (ship) => {
-      if( ship.color === targetColor ) {
+    this.flowers.forEach( (flower) => {
+      if( flower.color === targetColor ) {
         this.setState( { points: this.state.points + 10 } );
         this.flashes.push({
-          x: ship.x,
-          y: ship.y,
-          speed: this.shipTypes[ship.type].speed,
+          x: flower.x,
+          y: flower.y,
+          speed: this.flowerTypes[flower.type].speed,
           countdown: 20
         })
       }
@@ -98,33 +101,33 @@ class App extends Component {
   }
 
   gameLoop() {
-    // Update ship positions
-    this.ships.forEach( (ship) => {
-      ship.y += this.shipTypes[ship.type].speed;
-      // If ship has collided with player, process the collision.
-      if( ship.x <= this.state.x + 32  &&
-          ship.x + 32 >= this.state.x  &&
-          ship.y <= this.state.y + 32  &&
-          ship.y + 32 >= this.state.y  &&
-          ! ship.collided ) {
-        this.shipCollision( ship.color );
-        ship.collided = true;
+    // Update flower positions
+    this.flowers.forEach( (flower) => {
+      flower.y += this.flowerTypes[flower.type].speed;
+      // If flower has collided with player, process the collision.
+      if( flower.x <= this.state.x + 32  &&
+          flower.x + 32 >= this.state.x  &&
+          flower.y <= this.state.y + 32  &&
+          flower.y + 32 >= this.state.y  &&
+          ! flower.collided ) {
+        this.flowerCollision( flower.color );
+        flower.collided = true;
       }
-      if( ship.y > 370 ) { // Wrap ship to top of screen
-        ship.x = Math.random() * 270;
-        ship.y = 0;
-        ship.color = Math.floor(Math.random() * 3);
-        ship.collided = false;
+      if( flower.y > 370 ) { // Wrap flower to top of screen
+        flower.x = Math.random() * 270;
+        flower.y = 0;
+        flower.color = Math.floor(Math.random() * 3);
+        flower.collided = false;
       }
     })
-    // Move bubbles and update ships hit
+    // Move bubbles and update flowers hit
     this.bubbles.forEach( (bubble, index) => {
       bubble.y -= 5;
-      this.ships.forEach( (ship) => {
-        if( ship.x <= bubble.x + 16  &&  ship.x + 32 >= bubble.x  &&
-            ship.y + 32 >= bubble.y - 3  &&  ship.y + 32 <= bubble.y + 3 ) {
-          ship.color++; // Change ship color
-          if( ship.color > 2 )  ship.color = 0;
+      this.flowers.forEach( (flower) => {
+        if( flower.x <= bubble.x + 16  &&  flower.x + 32 >= bubble.x  &&
+            flower.y + 32 >= bubble.y - 3  &&  flower.y + 32 <= bubble.y + 3 ) {
+          flower.color++; // Change flower color
+          if( flower.color > 2 )  flower.color = 0;
         }
       });
       if( bubble.y <= 0 ) { // If bubble at top of play area, remove it
@@ -139,11 +142,11 @@ class App extends Component {
         this.flashes.splice( index, 1 );
       }
     });
-    if( this.state.shipMovement < 0  &&  this.state.x > 0 ) {
-      this.setState( { x: this.state.x + this.state.shipMovement } )
+    if( this.state.flowerMovement < 0  &&  this.state.x > 0 ) {
+      this.setState( { x: this.state.x + this.state.flowerMovement } )
     }
-    else if( this.state.shipMovement > 0  &&  this.state.x < 270 ) {
-      this.setState( { x: this.state.x + this.state.shipMovement } )
+    else if( this.state.flowerMovement > 0  &&  this.state.x < 270 ) {
+      this.setState( { x: this.state.x + this.state.flowerMovement } )
     }
     this.forceUpdate();
   }
@@ -152,10 +155,10 @@ class App extends Component {
   keyDown = e => {
     //console.log( "Key down: " + e.key );
     if( e.key === 'ArrowLeft' ) { // Move left
-      this.setState( { shipMovement: -2 } );
+      this.setState( { flowerMovement: -2 } );
     }
     else if( e.key === 'ArrowRight' ) { // Move right
-      this.setState( { shipMovement: 2 } );
+      this.setState( { flowerMovement: 2 } );
     }
     else if( e.key === ' ' ) { // Fire bubble
       this.bubbles.push( { x: this.state.x + 16, y: this.state.y + 10 } );
@@ -166,24 +169,25 @@ class App extends Component {
   keyUp = e => {
     //console.log( "Key up: " + e.key );
     if( e.key === 'ArrowLeft' ) {
-      this.setState( { shipMovement: 0 } );
+      this.setState( { flowerMovement: 0 } );
     }
     else if( e.key === 'ArrowRight' ) {
-      this.setState( { shipMovement: 0 } );
+      this.setState( { flowerMovement: 0 } );
     }
   }
 
   render() {
-    // Create ship images
-    let shipObjects = this.ships.map( (ship) => {
-      const enemyShipStyle = {
-        left: ship.x,
-        top: ship.y
+    // Create flower images
+    let flowerObjects = this.flowers.map( (flower) => {
+      const flowerStyle = {
+        left: flower.x,
+        top: flower.y
       }
-      let shipType = (ship.collided ? 'blank' : this.shipColors[ship.color] );
-      return <img src={'/images/flower' + ship.type + 
-          shipType + '.png'} alt='Enemy' style={enemyShipStyle}
-          className='ship' key={'enemy'+ship.id} />
+      let flowerType = (flower.collided ?
+          'blank' : this.flowerColors[flower.color] );
+      return <img src={'/images/flower' + flower.type + 
+          flowerType + '.png'} alt='Enemy' style={flowerStyle}
+          className='flower' key={'enemy'+flower.id} />
     });
     // Create bubble images
     let bubbleObjects = this.bubbles.map( (bubble, index) => {
@@ -204,8 +208,8 @@ class App extends Component {
       return <img src='/images/flash.png' alt='Flash' style={flashStyle}
           className='flash' key={'flash' + index} />
     });
-    // Create player ship
-    let playerShipStyle = {
+    // Create player flower
+    let playerStyle = {
       left: this.state.x,
       top: this.state.y
     }
@@ -215,9 +219,9 @@ class App extends Component {
         <div className="App" onKeyDown={this.keyDown} onKeyUp={this.keyUp}>
           {bubbleObjects}
           {flashObjects}
-          <img src='/images/player.png' style={playerShipStyle}
-              className='ship' alt='Player' />
-          {shipObjects}
+          <img src='/images/player.png' style={playerStyle}
+              className='flower' alt='Player' />
+          {flowerObjects}
         </div>
         <StatusBar points={this.state.points} />
       </div>
