@@ -19,12 +19,15 @@ fire a bubble.
 | ---- | ---------- |
 | 2018-12-25 | 1:45 |
 | 2018-12-26 | 1:15 |
+| 2018-12-27 | 1:00 |
 
 ## Resources
 
 Graphics are from the [Pixel Flower Icons](https://opengameart.org/content/pixel-flower-icons)
 tile set and [Superpowers Assets](https://opengameart.org/content/superpowers-assets-various-2d)
 tile set on [OpenGameArt.org](https://opengameart.org).
+
+The flower collection sound is a beep from the anime series _Gundam Wing_.
 
 This project was bootstrapped with
 [Create React App](https://github.com/facebook/create-react-app).

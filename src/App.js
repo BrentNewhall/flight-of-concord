@@ -233,6 +233,10 @@ class App extends Component {
           {flowerObjects}
         </div>
         <StatusBar points={this.state.points} />
+        <div className="instructions">
+          Use the left and right arrow keys to move your avatar, and the space
+          key to fire a bubble.
+        </div>
       </div>
     );
   }
