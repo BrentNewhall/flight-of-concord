@@ -59,7 +59,7 @@ class App extends Component {
       { speed: 0.4 }
     ];
     this.flowers = [];
-    for( let i = 0; i < 10; i++ ) {
+    for( let i = 0; i < 16; i++ ) {
       this.flowers.push(
         {
           id: i,
@@ -155,10 +155,10 @@ class App extends Component {
   keyDown = e => {
     //console.log( "Key down: " + e.key );
     if( e.key === 'ArrowLeft' ) { // Move left
-      this.setState( { flowerMovement: -2 } );
+      this.setState( { flowerMovement: -4 } );
     }
     else if( e.key === 'ArrowRight' ) { // Move right
-      this.setState( { flowerMovement: 2 } );
+      this.setState( { flowerMovement: 4 } );
     }
     else if( e.key === ' ' ) { // Fire bubble
       this.bubbles.push( { x: this.state.x + 16, y: this.state.y + 10 } );
