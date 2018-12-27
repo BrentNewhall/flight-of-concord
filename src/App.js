@@ -40,7 +40,7 @@ class App extends Component {
       new Audio('./audio/beep.mp3')
     ];
     this.beep = 0;
-    this.bgMusicPlaying = false;
+    this.gameStarted = false;
     this.flowerCollision = this.flowerCollision.bind(this);
     this.gameLoop = this.gameLoop.bind(this);
     this.keyDown = this.keyDown.bind(this);
@@ -74,6 +74,9 @@ class App extends Component {
   }
 
   gameLoop() {
+    // Do nothing until the player uses the keyboard
+    if( ! this.gameStarted )
+      return;
     // Update flower positions
     this.flowers.forEach( (flower) => {
       flower.y += this.flowerTypes[flower.type].speed;
@@ -136,8 +139,8 @@ class App extends Component {
     else if( e.key === ' ' ) { // Fire bubble
       this.bubbles.push( { x: this.state.x + 16, y: this.state.y + 10 } );
     }
-    if( ! this.bgMusicPlaying ) {
-      this.bgMusicPlaying = true;
+    if( ! this.gameStarted ) {
+      this.gameStarted = true;
       document.getElementById('bgMusic').volume = 0.4;
       document.getElementById('bgMusic').play();
       }
@@ -201,7 +204,7 @@ class App extends Component {
               className='flower' alt='Player' />
           {flowerObjects}
         </div>
-        <StatusBar points={this.state.points} />
+        <StatusBar points={this.state.points} gameStarted={this.gameStarted} />
         <div className="instructions">
           Use the left and right arrow keys to move your avatar, and the space
           key to fire a bubble.

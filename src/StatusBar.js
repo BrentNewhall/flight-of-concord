@@ -20,6 +20,8 @@ class StatusBar extends Component {
     }
   
     updateClock() {
+      if( ! this.props.gameStarted )
+        return;
       this.allSeconds += 1;
       this.seconds += 1;
       if( this.seconds >= 60 ) {
