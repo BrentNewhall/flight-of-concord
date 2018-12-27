@@ -4,20 +4,38 @@ import './App.css';
 class StatusBar extends Component {
   constructor( props ) {
     super( props );
-    this.timeElapsed = 0;
+    this.minutes = 0;
+    this.seconds = 0;
+    this.allSeconds = 0;
+    this.score = 0;
+    this.padded = this.padded.bind(this);
     this.updateClock = this.updateClock.bind(this);
     setInterval( this.updateClock, 1000 );
   }
 
+  padded(num) {
+    return (num >= 10) ? num : '0' + num;
+  }
+
   updateClock() {
-    this.timeElapsed += 1;
+    this.allSeconds += 1;
+    this.seconds += 1;
+    if( this.seconds >= 60 ) {
+      this.seconds = 0;
+      this.minutes += 1;
+    }
+    if( this.allSeconds === 0  ||  this.props.points === 0 )
+      this.score = 0;
+    else
+      this.score = Math.floor(this.props.points / this.allSeconds);
   }
 
   render() {
     return (
       <div className="scoreboard">
         <div className="points">{this.props.points}</div>
-        <div className="clock">{this.timeElapsed}</div>
+        <div className="clock">{this.minutes}:{this.padded(this.seconds)}</div>
+        <div className="score">{this.score}</div>
       </div>
     );
   }
