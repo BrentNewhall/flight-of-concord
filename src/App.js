@@ -64,7 +64,7 @@ class App extends Component {
         {
           id: i,
           x: Math.random() * 270,
-          y: Math.random() * 250,
+          y: i * 20,
           type: 1,
           color: Math.floor(Math.random() * 3),
           collided: false
@@ -73,6 +73,12 @@ class App extends Component {
     }
     this.bubbles = [];
     this.flashes = [];
+    this.beeps = [
+      new Audio('./audio/beep.mp3'),
+      new Audio('./audio/beep.mp3'),
+      new Audio('./audio/beep.mp3')
+    ];
+    this.beep = 0;
     this.flowerCollision = this.flowerCollision.bind(this);
     this.gameLoop = this.gameLoop.bind(this);
     this.keyDown = this.keyDown.bind(this);
@@ -87,6 +93,9 @@ class App extends Component {
 
   flowerCollision( targetColor ) {
     //alert( "Collision!" );
+    this.beeps[this.beep].play();
+    this.beep += 1;
+    if( this.beep >= this.beeps.length )  this.beep = 0;
     this.flowers.forEach( (flower) => {
       if( flower.color === targetColor ) {
         this.setState( { points: this.state.points + 10 } );
