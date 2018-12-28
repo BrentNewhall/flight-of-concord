@@ -12,7 +12,7 @@ class App extends Component {
     this.state = {
       x: 100,
       y: 360,
-      flowerMovement: 0,
+      playerMovement: 0,
       points: 0
     };
     this.level = 1;
@@ -50,9 +50,11 @@ class App extends Component {
     ];
     this.beep = 0;
     this.gameStarted = false;
+    this.bgCountdown = 0;
     this.startGame = this.startGame.bind(this);
     this.flowerCollision = this.flowerCollision.bind(this);
     this.gameLoop = this.gameLoop.bind(this);
+    this.checkForLevelUp = this.checkForLevelUp.bind(this);
     this.keyDown = this.keyDown.bind(this);
     this.Up = this.keyUp.bind(this);
     setInterval( this.gameLoop, 16 ); // 16 == 60fps
@@ -73,6 +75,7 @@ class App extends Component {
     this.flowers.forEach( (flower) => {
       if( flower.color === targetColor ) {
         this.setState( { points: this.state.points + 10 } );
+        this.checkForLevelUp();
         this.flashes.push({
           x: flower.x,
           y: flower.y,
@@ -128,13 +131,26 @@ class App extends Component {
         this.flashes.splice( index, 1 );
       }
     });
-    if( this.state.flowerMovement < 0  &&  this.state.x > 0 ) {
-      this.setState( { x: this.state.x + this.state.flowerMovement } )
+    // Move player
+    if( this.state.playerMovement < 0  &&  this.state.x > 0 ) {
+      this.setState( { x: this.state.x + this.state.playerMovement } )
     }
-    else if( this.state.flowerMovement > 0  &&  this.state.x < 270 ) {
-      this.setState( { x: this.state.x + this.state.flowerMovement } )
+    else if( this.state.playerMovement > 0  &&  this.state.x < 270 ) {
+      this.setState( { x: this.state.x + this.state.playerMovement } )
+    }
+    // Update background fade effect for level change, if applicable.
+    if( this.bgCountdown > 0 ) {
+      this.bgCountdown -= 1;
     }
     this.forceUpdate();
+  }
+
+  checkForLevelUp() {
+    if( this.state.points >= this.levelTargets[this.level]  &&
+        this.level < 4 ) {
+    this.level += 1;
+    this.bgCountdown = 50;
+    }
   }
 
   startGame() {
@@ -149,23 +165,16 @@ class App extends Component {
   keyDown = e => {
     //console.log( "Key down: " + e.key );
     if( e.key === 'ArrowLeft' ) { // Move left
-      this.setState( { flowerMovement: -4 } );
+      this.setState( { playerMovement: -4 } );
       this.startGame();
     }
     else if( e.key === 'ArrowRight' ) { // Move right
-      this.setState( { flowerMovement: 4 } );
+      this.setState( { playerMovement: 4 } );
       this.startGame();
     }
     else if( e.key === ' ' ) { // Fire bubble
       this.bubbles.push( { x: this.state.x + 16, y: this.state.y + 10 } );
       this.startGame();
-    }
-    else if( e.key === 'ArrowUp' ) { // Next level
-      // If we have enough points,
-      if( this.state.points >= this.levelTargets[this.level]  &&
-          this.level < 4 ) {
-        this.level += 1;
-      }
     }
     else if( e.key === 'ArrowDown' ) { // Pause
       if( this.gameStarted ) {
@@ -183,10 +192,10 @@ class App extends Component {
   keyUp = e => {
     //console.log( "Key up: " + e.key );
     if( e.key === 'ArrowLeft' ) {
-      this.setState( { flowerMovement: 0 } );
+      this.setState( { playerMovement: 0 } );
     }
     else if( e.key === 'ArrowRight' ) {
-      this.setState( { flowerMovement: 0 } );
+      this.setState( { playerMovement: 0 } );
     }
   }
 
@@ -222,6 +231,14 @@ class App extends Component {
       return <img src='/images/flash.png' alt='Flash' style={flashStyle}
           className='flash' key={'flash' + index} />
     });
+    // Create fade
+    var bgFade = '';
+    if( this.bgCountdown > 0 ) {
+      const bgFadeStyle = {
+        opacity: this.bgCountdown / 50
+      }
+      bgFade = <div className='backgroundFade' style={bgFadeStyle} />
+    }
     // Create player flower
     let playerStyle = {
       left: this.state.x,
@@ -243,6 +260,7 @@ class App extends Component {
         <Instructions points={this.state.points} level={this.level} 
             pointsTarget={this.levelTargets[this.level]} />
         <audio id='bgMusic' src={bgMusic} loop />
+        {bgFade}
       </div>
     );
   }

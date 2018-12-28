@@ -6,10 +6,21 @@
   background-color: #9dff9d;
 }
 
+.backgroundFade {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 300px;
+  height: 400px;
+  background-color: white;
+  z-index: 10;
+}
+
 .flower {
   position: absolute;
   width: 32px;
   height: 32px;
+  z-index: 50;
 }
 
 .bubble {
