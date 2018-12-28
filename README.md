@@ -20,6 +20,8 @@ fire a bubble.
 | 2018-12-25 | 1:45 |
 | 2018-12-26 | 1:15 |
 | 2018-12-27 | 1:45 |
+| 2018-12-28 | 1:30 |
+| TOTAL      | 6:15 |
 
 ## Resources
 
@@ -30,7 +32,7 @@ tile set on [OpenGameArt.org](https://opengameart.org).
 The flower collection sound is a beep from the anime series _Gundam Wing_.
 
 The background music is "Infinite Perspective" by
-[Kevin MacLeod](incompetech.com), licensed under a
+[Kevin MacLeod](http://incompetech.com), licensed under a
 [Creative Commons: By Attribution 3.0 License](http://creativecommons.org/licenses/by/3.0/)
 
 This project was bootstrapped with

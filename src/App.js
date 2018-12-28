@@ -18,10 +18,10 @@ class App extends Component {
     this.level = 1;
     this.levelTargets = [
       0,
-      1000, // 5000
-      2000, // 7500
-      3000, // 10000
-      4000 // 15000
+      5000,
+      12000,
+      20000,
+      50000
     ];
     this.flowerColors = [ 'red', 'blue', 'yellow', 'purple', 'green' ];
     this.flowerTypes = [
@@ -258,7 +258,8 @@ class App extends Component {
             pointsTarget={this.levelTargets[this.level]}
             level={this.level} />
         <Instructions points={this.state.points} level={this.level} 
-            pointsTarget={this.levelTargets[this.level]} />
+            pointsTarget={this.levelTargets[this.level]}
+            flowerColors={this.flowerColors} />
         <audio id='bgMusic' src={bgMusic} loop />
         {bgFade}
       </div>
