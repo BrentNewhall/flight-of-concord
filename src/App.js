@@ -18,7 +18,7 @@ class App extends Component {
     this.level = 1;
     this.levelTargets = [
       0,
-      1000,
+      5000,
       7500,
       10000,
       15000
@@ -110,7 +110,7 @@ class App extends Component {
       bubble.y -= 5;
       this.flowers.forEach( (flower) => {
         if( flower.x <= bubble.x + 16  &&  flower.x + 32 >= bubble.x  &&
-            flower.y + 32 >= bubble.y - 3  &&  flower.y + 32 <= bubble.y + 3 ) {
+            flower.y + 32 >= bubble.y - 2  &&  flower.y + 32 <= bubble.y + 2 ) {
           flower.color++; // Change flower color
           if( flower.color > this.level )  flower.color = 0;
         }
@@ -213,7 +213,8 @@ class App extends Component {
               className='flower' alt='Player' />
           {flowerObjects}
         </div>
-        <StatusBar points={this.state.points} gameStarted={this.gameStarted} />
+        <StatusBar points={this.state.points} gameStarted={this.gameStarted}
+            pointsTarget={this.levelTargets[this.level]} />
         <Instructions points={this.state.points}
             pointsTarget={this.levelTargets[this.level]} />
         <audio id='bgMusic' src={bgMusic} loop />

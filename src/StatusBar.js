@@ -28,18 +28,23 @@ class StatusBar extends Component {
         this.seconds = 0;
         this.minutes += 1;
       }
-      if( this.allSeconds === 0  ||  this.props.points === 0 )
-        this.score = 0;
-      else
-        this.score = Math.floor(this.props.points / this.allSeconds);
+      this.score = this.props.pointsTarget - this.props.points;
+      if( this.score < 0 )  this.score = 0;
     }
   
     render() {
+      var scoreText = '';
+      if( this.score === 0 ) {
+        scoreText = 'Level up!';
+      }
+      else {
+        scoreText = this.score;
+      }
       return (
         <div className="scoreboard">
           <div className="points">{this.props.points}</div>
           <div className="clock">{this.minutes}:{this.padded(this.seconds)}</div>
-          <div className="score">{this.score}</div>
+          <div className="score">{scoreText}</div>
         </div>
       );
     }
