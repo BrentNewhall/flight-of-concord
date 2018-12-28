@@ -14,7 +14,8 @@ class App extends Component {
       flowerMovement: 0,
       points: 0
     };
-    this.flowerColors = [ 'red', 'blue', 'yellow' ];
+    this.level = 1;
+    this.flowerColors = [ 'red', 'blue', 'yellow', 'purple', 'green' ];
     this.flowerTypes = [
       { speed: 0 },
       { speed: 0.4 }
@@ -27,7 +28,7 @@ class App extends Component {
           x: Math.random() * 270,
           y: i * 20,
           type: 1,
-          color: Math.floor(Math.random() * 3),
+          color: Math.floor(Math.random() * 2),
           collided: false
         }
       )
@@ -92,7 +93,7 @@ class App extends Component {
       if( flower.y > 370 ) { // Wrap flower to top of screen
         flower.x = Math.random() * 270;
         flower.y = 0;
-        flower.color = Math.floor(Math.random() * 3);
+        flower.color = Math.floor(Math.random() * (this.level + 1));
         flower.collided = false;
       }
     })
@@ -103,7 +104,7 @@ class App extends Component {
         if( flower.x <= bubble.x + 16  &&  flower.x + 32 >= bubble.x  &&
             flower.y + 32 >= bubble.y - 3  &&  flower.y + 32 <= bubble.y + 3 ) {
           flower.color++; // Change flower color
-          if( flower.color > 2 )  flower.color = 0;
+          if( flower.color > this.level )  flower.color = 0;
         }
       });
       if( bubble.y <= 0 ) { // If bubble at top of play area, remove it
