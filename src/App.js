@@ -18,10 +18,10 @@ class App extends Component {
     this.level = 1;
     this.levelTargets = [
       0,
-      5000,
-      7500,
-      10000,
-      15000
+      1000, // 5000
+      1000, // 7500
+      1000, // 10000
+      1000 // 15000
     ];
     this.flowerColors = [ 'red', 'blue', 'yellow', 'purple', 'green' ];
     this.flowerTypes = [
@@ -50,6 +50,7 @@ class App extends Component {
     ];
     this.beep = 0;
     this.gameStarted = false;
+    this.startGame = this.startGame.bind(this);
     this.flowerCollision = this.flowerCollision.bind(this);
     this.gameLoop = this.gameLoop.bind(this);
     this.keyDown = this.keyDown.bind(this);
@@ -136,23 +137,39 @@ class App extends Component {
     this.forceUpdate();
   }
 
+  startGame() {
+    if( ! this.gameStarted ) {
+      this.gameStarted = true;
+      document.getElementById('bgMusic').volume = 0.4;
+      document.getElementById('bgMusic').play();
+    }
+  }
+
   // Process key press
   keyDown = e => {
     //console.log( "Key down: " + e.key );
     if( e.key === 'ArrowLeft' ) { // Move left
       this.setState( { flowerMovement: -4 } );
+      this.startGame();
     }
     else if( e.key === 'ArrowRight' ) { // Move right
       this.setState( { flowerMovement: 4 } );
+      this.startGame();
     }
     else if( e.key === ' ' ) { // Fire bubble
       this.bubbles.push( { x: this.state.x + 16, y: this.state.y + 10 } );
+      this.startGame();
     }
-    if( ! this.gameStarted ) {
-      this.gameStarted = true;
-      document.getElementById('bgMusic').volume = 0.4;
-      document.getElementById('bgMusic').play();
+    else if( e.key == 'ArrowDown' ) { // Pause
+      if( this.gameStarted ) {
+        this.gameStarted = false;
+        document.getElementById('bgMusic').pause();
       }
+      else {
+        this.gameStarted = true;
+        document.getElementById('bgMusic').play();
+      }
+    }
   }
 
   // Key has been depressed; disable appropriate behavior

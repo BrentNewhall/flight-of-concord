@@ -7,12 +7,14 @@ class Instructions extends Component {
    render() {
       var readyToLevel = '';
       if( this.props.points >= this.props.pointsTarget ) {
-        readyToLevel = <p>Press up arrow to move to the next level!</p>
+        readyToLevel = <p><strong>&uarr;</strong> Move to the next level!</p>
       }
       return (
         <div className="instructions">
-          <p>Use the left and right arrow keys to move your avatar, and the space
-          space key to fire a bubble.</p>
+          <p><strong>[Space]</strong> Fire bubble</p>
+          <p>&larr; Move left</p>
+          <p>&rarr; Move right</p>
+          <p>&darr; Pause</p>
           {readyToLevel}
         </div>
       );
