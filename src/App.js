@@ -19,9 +19,9 @@ class App extends Component {
     this.levelTargets = [
       0,
       1000, // 5000
-      1000, // 7500
-      1000, // 10000
-      1000 // 15000
+      2000, // 7500
+      3000, // 10000
+      4000 // 15000
     ];
     this.flowerColors = [ 'red', 'blue', 'yellow', 'purple', 'green' ];
     this.flowerTypes = [
@@ -160,7 +160,14 @@ class App extends Component {
       this.bubbles.push( { x: this.state.x + 16, y: this.state.y + 10 } );
       this.startGame();
     }
-    else if( e.key == 'ArrowDown' ) { // Pause
+    else if( e.key === 'ArrowUp' ) { // Next level
+      // If we have enough points,
+      if( this.state.points >= this.levelTargets[this.level]  &&
+          this.level < 4 ) {
+        this.level += 1;
+      }
+    }
+    else if( e.key === 'ArrowDown' ) { // Pause
       if( this.gameStarted ) {
         this.gameStarted = false;
         document.getElementById('bgMusic').pause();
@@ -231,8 +238,9 @@ class App extends Component {
           {flowerObjects}
         </div>
         <StatusBar points={this.state.points} gameStarted={this.gameStarted}
-            pointsTarget={this.levelTargets[this.level]} />
-        <Instructions points={this.state.points}
+            pointsTarget={this.levelTargets[this.level]}
+            level={this.level} />
+        <Instructions points={this.state.points} level={this.level} 
             pointsTarget={this.levelTargets[this.level]} />
         <audio id='bgMusic' src={bgMusic} loop />
       </div>

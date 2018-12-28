@@ -6,7 +6,8 @@ import './App.css';
 class Instructions extends Component {
    render() {
       var readyToLevel = '';
-      if( this.props.points >= this.props.pointsTarget ) {
+      if( this.props.points >= this.props.pointsTarget  &&
+          this.props.level !== 4 ) {
         readyToLevel = <p><strong>&uarr;</strong> Move to the next level!</p>
       }
       return (

@@ -35,7 +35,12 @@ class StatusBar extends Component {
     render() {
       var scoreText = '';
       if( this.score === 0 ) {
-        scoreText = 'Level up!';
+        if( this.props.level === 4 ) {
+          scoreText = 'You win!'
+        }
+        else {
+          scoreText = 'Level up!';
+        }
       }
       else {
         scoreText = this.score;
@@ -43,7 +48,7 @@ class StatusBar extends Component {
       return (
         <div className="scoreboard">
           <div className="points">{this.props.points}</div>
-          <div className="clock">{this.minutes}:{this.padded(this.seconds)}</div>
+          <div className="clock">Level {this.props.level}</div>
           <div className="score">{scoreText}</div>
         </div>
       );
