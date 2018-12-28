@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import Instructions from './Instructions';
 import StatusBar from './StatusBar';
 
 import bgMusic from './audio/InfinitePerspective.mp3';
@@ -15,6 +16,13 @@ class App extends Component {
       points: 0
     };
     this.level = 1;
+    this.levelTargets = [
+      0,
+      1000,
+      7500,
+      10000,
+      15000
+    ];
     this.flowerColors = [ 'red', 'blue', 'yellow', 'purple', 'green' ];
     this.flowerTypes = [
       { speed: 0 },
@@ -206,10 +214,8 @@ class App extends Component {
           {flowerObjects}
         </div>
         <StatusBar points={this.state.points} gameStarted={this.gameStarted} />
-        <div className="instructions">
-          Use the left and right arrow keys to move your avatar, and the space
-          key to fire a bubble.
-        </div>
+        <Instructions points={this.state.points}
+            pointsTarget={this.levelTargets[this.level]} />
         <audio id='bgMusic' src={bgMusic} loop />
       </div>
     );
