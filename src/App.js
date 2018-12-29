@@ -208,7 +208,7 @@ class App extends Component {
       }
       let flowerType = (flower.collided ?
           'blank' : this.flowerColors[flower.color] );
-      return <img src={'/images/flower' + flower.type + 
+      return <img src={'images/flower' + flower.type + 
           flowerType + '.png'} alt='Enemy' style={flowerStyle}
           className='flower' key={'enemy'+flower.id} />
     });
@@ -218,7 +218,7 @@ class App extends Component {
         left: bubble.x,
         top: bubble.y
       }
-      return <img src='/images/bubble.png' alt='Bubble' style={bubbleStyle}
+      return <img src='images/bubble.png' alt='Bubble' style={bubbleStyle}
           className='bubble' key={'bubble' + index} />
     })
     // Create flashes
@@ -228,7 +228,7 @@ class App extends Component {
         top: flash.y,
         opacity: flash.countdown / 20
       }
-      return <img src='/images/flash.png' alt='Flash' style={flashStyle}
+      return <img src='images/flash.png' alt='Flash' style={flashStyle}
           className='flash' key={'flash' + index} />
     });
     // Create fade
@@ -250,7 +250,7 @@ class App extends Component {
         <div className="App" onKeyDown={this.keyDown} onKeyUp={this.keyUp}>
           {bubbleObjects}
           {flashObjects}
-          <img src='/images/player.png' style={playerStyle}
+          <img src='images/player.png' style={playerStyle}
               className='flower' alt='Player' />
           {flowerObjects}
         </div>

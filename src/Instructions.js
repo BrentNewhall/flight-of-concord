@@ -11,7 +11,7 @@ class Instructions extends Component {
           top: 0,
           left: i * 30
         }
-        flowers.push( <img src={'/images/flower1' + this.props.flowerColors[i] +
+        flowers.push( <img src={'images/flower1' + this.props.flowerColors[i] +
         '.png'} alt='Enemy' style={flowerStyle}
         className='flower' key={'flowerExample'+i} /> );
       }
